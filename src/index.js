@@ -1,10 +1,21 @@
 async function getComponent() {
-  const element = document.createElement('div');
+  const div = document.createElement('div');
+  div.innerHTML = 'Hello';
+  div.appendChild(getBtn());
+
+  return div;
+}
+
+const lodashMessage = async (div) => {
   const { default: _ } = await import(/* webpackChunkName: "lodash" */ 'lodash');
+  console.log(_.join(['Hello', 'webpack'], ' '));
+};
 
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-
-  return element;
+function getBtn() {
+  const btn = document.createElement('button');
+  btn.innerHTML = 'Click me and check the console!';
+  btn.onclick = lodashMessage;
+  return btn;
 }
 
 getComponent().then(component => {
